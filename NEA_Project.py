@@ -5,22 +5,53 @@
 from tkinter import *
 from tkinter import Tk
 from tkinter.ttk import *
+from tkinter import messagebox
+import sqlite3
 
-# before authorisation can work a database must be created for the user details
 
-
+# checks user input against database and opens relevant library
 def auth(username, password):
-    # check username and password against database
+    """
+    :param username:
+    :param password:
+    :return: null
+    """
 
-    # if username in database:
-    # return true
-    # repeat for password
+    authorised = "False"
+    # check username and password against database
+    db_connect = sqlite3.connect('music_database.db')
+    # the command being assigned to be later
+    # TODO change sql statement to apply to my database
+    sqlite_create_table_query = '''CREATE TABLE SqliteDb_developers (
+                                id INTEGER PRIMARY KEY,
+                                name TEXT NOT NULL,
+                                email text NOT NULL UNIQUE,
+                                joining_date datetime,
+                                salary REAL NOT NULL);'''
+
+    c = db_connect.cursor()
+    print("Successfully Connected to SQLite")
+    # executes the command specified in the string
+    c.execute(sqlite_create_table_query)
+    db_connect.commit()
+    print("SQLite table created")
+    # gets all values from the database
+    c.fetchall()
+    # closes data base connection
+    c.close()
+
+    ''' if username in database:
+    return true
+    repeat for password '''
 
     # get_library_id() method should also be implemented here
-    return
+    if authorised == "True":
+        open_library()
+    else:
+        messagebox.showwarning("Username and/or password incorrect")
 
 
-def open_personal():
+def open_library():
     master1 = Tk()
     main_library = PersonalLibrary(master1)
     master1.mainloop()
@@ -54,7 +85,7 @@ class LoginPage:
 
         # region button & commands
         self.Submit = Button(master, text="Login",
-                             command=lambda: [LoginPage(master).close(), open_personal(),
+                             command=lambda: [LoginPage(master).close(),
                                               auth(self.Username, self.Password)]).grid(column=1, row=5,)
         # endregion
 
