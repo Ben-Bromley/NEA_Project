@@ -15,7 +15,7 @@ class UserTable(object):
                         PASSWORD TEXT NOT NULL
                             )""")
 
-    def create_user(self, userID, username, password):
+    def create_user(self, user_id, username, password):
         with self.db_connect:
             self.c.execute('''INSERT INTO TABLE Users
              ()''')
