@@ -42,7 +42,7 @@ class LoginPage:
 
         self.master = master
         master.title("Login Page")  # names the form
-        master.geometry('300x180')  # width then height
+        master.geometry('400x180')  # width then height
         master.resizable(0, 0)  # cannot resize form
         self.Top_Lbl = Label(master, text="Please Enter Your Details")\
             .grid(column=1, row=0, padx=(10, 10), pady=(15, 10))
