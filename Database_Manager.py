@@ -1,4 +1,5 @@
 import sqlite3
+import sql_const
 
 
 class UserTable(object):
@@ -9,16 +10,20 @@ class UserTable(object):
 
     def create_database(self):
         with self.db_connect:
-            self.c.execute("""CREATE TABLE IF NOT EXISTS Users (
-                        USERID INTEGER PRIMARY KEY,
-                        USERNAME TEXT NOT NULL,
-                        PASSWORD TEXT NOT NULL
-                            )""")
+            self.c.execute(sql_const.INIT_USER_TABLE)
 
+    # Create user
     def create_user(self, user_id, username, password):
         with self.db_connect:
-            self.c.execute('''INSERT INTO TABLE Users
-             ()''')
+            self.c.execute(sql_const.CREATE_USER, (user_id, username, password))
+
+    def delete_user(self, user_id, username, password, library_id):
+        with self.db_connect:
+            self.c.execute()
+
+    def auth_user(self, username, password):
+        with self.db_connect:
+            self.c.execute()
 
     def close_database(self):
         # closes database connection

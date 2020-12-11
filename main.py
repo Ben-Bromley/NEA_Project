@@ -1,6 +1,5 @@
-# HourGlass
+# Ben Bromley NEA project - 2020/21 - Wigston College
 
-# Start with Auth page
 
 from tkinter import *
 from tkinter import Tk
