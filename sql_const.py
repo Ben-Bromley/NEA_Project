@@ -1,7 +1,6 @@
 # This file is here as a method of using sql statements as constants
 
 # ALL USER TABLE SQL
-
 # Initialising table
 INIT_USER_TABLE = """CREATE TABLE IF NOT EXISTS Users (
                         USERID INTEGER PRIMARY KEY AUTOINCREMENT,
