@@ -5,8 +5,11 @@
 INIT_USER_TABLE = """CREATE TABLE IF NOT EXISTS Users (
                         USERID INTEGER PRIMARY KEY AUTOINCREMENT,
                         USERNAME TEXT NOT NULL UNIQUE,
-                        PASSWORD TEXT NOT NULL
+                         PASSWORD TEXT NOT NULL
                         )"""
+
+GET_USER_ID = """SELECT USERID FROM users 
+                WHERE USERNAME = ? AND PASSWORD = ?"""
 
 # Delete user from table
 DELETE_USER = """DELETE USERNAME, PASSWORD FROM Users
@@ -14,11 +17,11 @@ DELETE_USER = """DELETE USERNAME, PASSWORD FROM Users
 
 # Add user to table
 CREATE_USER = """INSERT INTO Users (
-                    USERID, USERNAME, PASSWORD)
-                    VALUES (?, ?, ?) """
+                    USERNAME, PASSWORD)
+                    VALUES (?, ?) """
 
 # Authenticate user to table
-AUTH_USER = """SELECT USERID, USERNAME, PASSWORD FROM Users 
+GET_USER = """SELECT USERID, USERNAME, PASSWORD FROM Users 
                 WHERE USERNAME = ? AND PASSWORD = ?"""
 
 
@@ -26,10 +29,17 @@ AUTH_USER = """SELECT USERID, USERNAME, PASSWORD FROM Users
 # TODO: LEARN HOW TO BUILD RELATIONS
 # TODO: Write remaining sql statements for this table
 INIT_LIBRARY_TABLE = """CREATE TABLE IF NOT EXISTS Library (
-                            USERID INTEGER PRIMARY KEY
+                            LIBRARYID INTEGER PRIMARY KEY AUTOINCREMENT
+                            USERID INTEGER FOREIGN KEY
                             PIECEID INTEGER NOT NULL)"""
+# TODO: Make sure PIECEID is valid in table
+# TODO: sort out primary key in library table
+NEW_USER_LIBRARY = """INSERT INTO TABLE Library
+                    (USERID,)"""
 
-NEW_USER_LIBRARY = """SQL"""
+DELETE_USER_LIBRARY = """"""
+
+
 # All MUSIC TABLE SQL
 
 
