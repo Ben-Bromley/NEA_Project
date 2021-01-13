@@ -27,7 +27,7 @@ def auth(username, password):
 
 
 def open_library():
-    # find the best way to manage multiple forms
+    # TODO: find the best way to manage multiple forms
     master1 = Tk()
     main_library = PersonalLibrary(master1)
     master1.mainloop()
