@@ -1,10 +1,10 @@
 # Ben Bromley NEA project - 2020/21 - Wigston College
 
-
 from tkinter import *
 from tkinter import Tk
 from tkinter.ttk import *
 from tkinter import messagebox
+import Database_Manager
 
 
 # checks user input against database and opens relevant library
@@ -12,17 +12,14 @@ def auth(username, password):
     """
     :param username:
     :param password:
-    :return: null
+    :return: boolean
     """
+    # TODO: This needs to return true if it matches the database
+    # instantiates class
+    authorise = Database_Manager.UserTable()
+    #
+    auth_boolean = authorise.get_user(username, password)
 
-    authorised = "False"
-
-
-    ''' if username in database:
-    return true
-    repeat for password '''
-
-    # get_library_id() method should also be implemented here
     if authorised == "True":
         open_library()
     else:
@@ -30,6 +27,7 @@ def auth(username, password):
 
 
 def open_library():
+    # find the best way to manage multiple forms
     master1 = Tk()
     main_library = PersonalLibrary(master1)
     master1.mainloop()
