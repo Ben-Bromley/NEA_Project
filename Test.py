@@ -1,6 +1,9 @@
-import main
 import Database_Manager
-import sql_const
+
+username = input("Username: ")
+password = input("Password: ")
 
 test = Database_Manager.UserTable()
-test.create_user(1, "benjamin", "12345")
+auth = test.get_user(username, password)
+if auth:
+    print("Access Granted")
