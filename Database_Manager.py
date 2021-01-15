@@ -57,6 +57,7 @@ class UserTable(object):
         # closes database connection
         self.db_connect.close()
 
+
 class LibraryTable(object):
     def __init__(self):
         self.db_connect = sqlite3.connect('music_database.db')
