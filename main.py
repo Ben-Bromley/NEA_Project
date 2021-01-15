@@ -18,11 +18,12 @@ def auth(username, password):
     # instantiates class
     auth_user_object = Database_Manager.UserTable()
     # returns true if login is correct
-    auth_boolean = auth_user_object.get_user(username, password)
-    # opens library if auth_boolean returns true
+    auth_boolean = auth_user_object.get_user(str(username), str(password))
+    # opens library if auth_boolean returns true  
     if auth_boolean == "True":
         open_library()
     else:
+        # TODO: make warning box work
         messagebox.showwarning("Username and/or password incorrect."
                                "\nPlease Try Again")
         #
@@ -48,7 +49,7 @@ class LoginPage:
         self.master.title("Welcome")  # names the form
         self.master.geometry('275x400')  # width then height
         self.master.resizable(0, 0)  # cannot resize form
-        self.master['bg'] = 'grey'
+        self.master['bg'] = 'light grey'
         # intro label
         self.Top_Lbl = Label(self.master, text="Sign in") \
             .grid(column=0, row=2, padx=(0, 0), pady=(15, 10))
