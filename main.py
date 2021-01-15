@@ -36,9 +36,9 @@ def auth(username, password):
 # def open_delete_user():
 
 def open_library():
-    master_library = Tk()
-    main_library = PersonalLibrary(master_library)
-    master_library.mainloop()
+    main_library = Tk()
+    library_form_object = PersonalLibrary(main_library)
+    main_library.mainloop()
 
 
 # Login page
@@ -98,11 +98,11 @@ class LoginPage:
 
 class PersonalLibrary:
 
-    def __init__(self, master1):
-        self.master1 = master1
-        master1.title("My Library")  # names the form
-        master1.geometry('600x360')  # width then height
-        master1.resizable(0, 0)  # cannot resize form
+    def __init__(self, main_library):
+        self.main_library = main_library
+        self.main_library.title("My Library")  # names the form
+        self.main_library.geometry('600x360')  # width then height
+        self.main_library.resizable(0, 0)  # cannot resize form
 
 
 # used to open the login page
