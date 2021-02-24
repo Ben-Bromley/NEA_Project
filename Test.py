@@ -21,13 +21,13 @@ def auth_user():
             print("Access Denied")
 
 
-def create_user(): # TODO: Finish test login
+def create_user():  # TODO: Finish test login
     print("Enter a username:")
     new_username = input("~ ")
 
 
 # Main menu
-print("\n Welcome to the sheet music manager \n" 
+print("\n Welcome to the sheet music manager \n"
       "Please type 1, 2, or 3 for what you'd like to do: \n"
       "[1] Login to Your Account \n"
       "[2] Delete Your Account \n"
