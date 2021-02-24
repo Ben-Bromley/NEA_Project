@@ -5,7 +5,7 @@
 INIT_USER_TABLE = """CREATE TABLE IF NOT EXISTS Users (
                         USERID INTEGER PRIMARY KEY AUTOINCREMENT,
                         USERNAME TEXT NOT NULL UNIQUE,
-                         PASSWORD TEXT NOT NULL
+                        PASSWORD TEXT NOT NULL
                         )"""
 
 GET_USER_ID = """SELECT USERID FROM users 
