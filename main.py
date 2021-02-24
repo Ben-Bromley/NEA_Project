@@ -10,7 +10,7 @@ import Database_Manager
 # authorises user
 def auth(username, password):
     """
-    :param username:
+    :param username:∏
     :param password:
     :return: boolean
     """
@@ -19,7 +19,7 @@ def auth(username, password):
     auth_user_object = Database_Manager.UserTable()
     # returns true if login is correct
     auth_boolean = auth_user_object.get_user(str(username), str(password))
-    # opens library if auth_boolean returns true  
+    # opens library if auth_boolean returns true
     if auth_boolean == "True":
         open_library()
     else:
@@ -80,7 +80,8 @@ class LoginPage:
                                                    auth(self.Username, self.Password)])\
             .grid(column=0, row=7, pady=(10, 5))
 
-        self.OptionLabel = Label(self.master, text="Or:").grid(column=0, row=8, padx=10, pady=20)
+        self.OptionLabel = Label(self.master, text="Or:").grid(
+            column=0, row=8, padx=10, pady=20)
 
         self.CreateButton = Button(self.master, text="Create a new account",
                                    command=lambda: [LoginPage(master).close(),
