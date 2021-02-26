@@ -38,7 +38,7 @@ class UserTable(object):
             self.c.execute(sql_const.DELETE_USER, (username, password))
             # TODO: Step 3: Remove Users Files
             # Step 4: Remove Library For User
-            self.c.execute(sql_const.DELETE_USER)
+            # self.c.execute(sql_const.DELETE_USER) - USER TABLE
 
     def get_user(self, username, password):
         # gets user details from database
