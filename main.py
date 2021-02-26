@@ -27,6 +27,7 @@ def auth(username, password):
     # opens library if auth_boolean returns true
     if auth_boolean:
         print("Auth returned True")
+        login_page_object.close()
         open_library()
     else:
         # TODO: finish warning box work
@@ -78,8 +79,7 @@ class LoginPage:
 
         # region button & commands
         self.LoginButton = Button(self.master, text="Login",
-                                  command=lambda: [LoginPage(master).close(),
-                                                   auth(self.Username, self.Password)])\
+                                  command=lambda: [auth(self.Username, self.Password)])\
             .grid(column=0, row=7, pady=(10, 5))
 
         self.OptionLabel = Label(self.master, text="Or:").grid(
@@ -119,4 +119,5 @@ root = Tk()  # runs form
 login_page_object = LoginPage(root)  # instantiates the LoginPage
 root.mainloop()  # keeps form running
 #
+print("running random code")
 # then open pdf
