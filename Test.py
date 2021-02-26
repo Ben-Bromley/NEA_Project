@@ -24,6 +24,11 @@ def auth_user():
 def create_user():  # TODO: Finish test login
     print("Enter a username:")
     new_username = input("~ ")
+    print("Enter a password:")
+    new_password = input("~ ")
+    # sends new details to be added to .db
+    test.create_user(new_username, new_password)
+    print(f'welcome {new_username}')
 
 
 # Main menu
