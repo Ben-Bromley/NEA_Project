@@ -1,10 +1,10 @@
 # Ben Bromley NEA project - 2020/21 - Wigston College
 
 from tkinter import *
-from tkinter import Tk
+from tkinter import Tk, messagebox
 from tkinter.ttk import *
-from tkinter import messagebox
-import Database_Manager
+
+import databaseManager
 
 
 # authorises user
@@ -14,11 +14,13 @@ def auth(username, password):
     :param password:
     :return: boolean
     """
+    NormalUsername = username.get()
+    NormalPassword = password.get()
 
     # instantiates class
-    auth_user_object = Database_Manager.UserTable()
+    auth_user_object = databaseManager.UserTable()
     # returns true if login is correct
-    auth_boolean = auth_user_object.get_user(str(username), str(password))
+    auth_boolean = auth_user_object.get_user((username), (password))
     # opens library if auth_boolean returns true
     if auth_boolean == "True":
         open_library()
