@@ -15,10 +15,10 @@ def auth_user():
         auth = test.get_user(username, password)
 
         if auth:
-            return username
-            break
+            return username, True
+
         else:
-            print("Access Denied")
+            print("unauthorised.")
 
 
 def create_user():  # TODO: Finish test login
@@ -46,8 +46,11 @@ print(f'You chose: {welcome_option}')
 if welcome_option == '1':
     # Gets username from user
     # authorises user
-    user = auth_user()
-    print("Access Granted, Welcome", user)
+    user, authorised = auth_user()
+    if authorised:
+        print("Access Granted, Welcome", user)
+    else:
+        print("Accessed Denied")
 
 elif welcome_option == '2':
     print("Please log in first:")
