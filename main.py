@@ -14,18 +14,22 @@ def auth(username, password):
     :param password:
     :return: boolean
     """
-    NormalUsername = username.get()
-    NormalPassword = password.get()
-
+    # Converts tkinter variables into python variables
+    normUsername = username.get()
+    normPassword = password.get()
+    # Checking new and old variables
+    print(normUsername, normPassword)
+    print(username, password)
     # instantiates class
     auth_user_object = databaseManager.UserTable()
     # returns true if login is correct
-    auth_boolean = auth_user_object.get_user((username), (password))
+    auth_boolean = auth_user_object.get_user((normUsername), (normPassword))
     # opens library if auth_boolean returns true
-    if auth_boolean == "True":
+    if auth_boolean:
+        print("Auth returned True")
         open_library()
     else:
-        # TODO: make warning box work
+        # TODO: finish warning box work
         messagebox.showwarning("Username and/or password incorrect."
                                "\nPlease Try Again")
         #
@@ -37,13 +41,9 @@ def auth(username, password):
 # TODO: open delete user form
 # def open_delete_user():
 
-def open_library():
-    main_library = Tk()
-    library_form_object = PersonalLibrary(main_library)
-    main_library.mainloop()
-
 
 # Login page
+
 class LoginPage:
 
     def __init__(self, master):
@@ -99,6 +99,12 @@ class LoginPage:
         self.master.destroy()
 
 
+def open_library():
+    main_library = Tk()
+    library_form_object = PersonalLibrary(main_library)
+    main_library.mainloop()
+
+
 class PersonalLibrary:
 
     def __init__(self, main_library):
@@ -109,10 +115,8 @@ class PersonalLibrary:
 
 
 # used to open the login page
-
 root = Tk()  # runs form
 login_page_object = LoginPage(root)  # instantiates the LoginPage
 root.mainloop()  # keeps form running
-
 #
 # then open pdf
