@@ -32,12 +32,16 @@ class UserTable(object):
 
     def delete_user(self, username, password):
         with self.db_connect:
-            # Step 1: Get user ID
+            # Step 1: Get user ID (in order to delete user table)
             self.c.execute(sql_const.GET_USER_ID, (username, password))
+            # test code to collect user id:
+            # user_id = self.c.fetchall()
+
             # Step 2: Deleting user
             self.c.execute(sql_const.DELETE_USER, (username, password))
+
             # TODO: Step 3: Remove Users Files
-            # Step 4: Remove Library For User
+            # TODO: Step 4: Remove Library For User (delete where userid = ?)
             # self.c.execute(sql_const.DELETE_USER) - USER TABLE
 
     def get_user(self, username, password):
