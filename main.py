@@ -8,6 +8,8 @@ import databaseManager
 
 
 # authorises user
+# this is called to authorise a user before opening
+#  and to authorise a user before deleting their account
 def auth(username, password):
     """
     :param username:∏
@@ -17,13 +19,14 @@ def auth(username, password):
     # Converts tkinter variables into python variables
     normUsername = username.get()
     normPassword = password.get()
-    # Checking new and old variables
-    print(normUsername, normPassword)
-    print(username, password)
     # instantiates class
     auth_user_object = databaseManager.UserTable()
     # returns true if login is correct
-    auth_boolean = auth_user_object.get_user((normUsername), (normPassword))
+    return auth_user_object.get_user((normUsername), (normPassword))
+
+
+def auth_to_open(username, password):
+    auth_boolean = auth(username, password)
     # opens library if auth_boolean returns true
     if auth_boolean:
         print("Auth returned True")
@@ -33,7 +36,6 @@ def auth(username, password):
         # TODO: finish warning box work
         messagebox.showwarning("Username and/or password incorrect."
                                "\nPlease Try Again")
-        #
 
 
 # TODO: make create user form
@@ -79,7 +81,7 @@ class LoginPage:
 
         # region button & commands
         self.LoginButton = Button(self.master, text="Login",
-                                  command=lambda: [auth(self.Username, self.Password)])\
+                                  command=lambda: [auth_to_open(self.Username, self.Password)])\
             .grid(column=0, row=7, pady=(10, 5))
 
         self.OptionLabel = Label(self.master, text="Or:").grid(
