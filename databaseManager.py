@@ -2,6 +2,8 @@ import sqlite3
 import sql_const
 
 # Class for managing the UserTab;e in the database
+
+
 class UserTable(object):
     def __init__(self):
         # Connects to the database file
@@ -45,12 +47,15 @@ class UserTable(object):
             self.c.execute(sql_const.GET_USER, (username, password))
             # puts result into variable , returns "[]" if details incorrect
             user_details = self.c.fetchall()
+            print(user_details)
             # if user_details has data, it prints the details
             if user_details:
-                return True
                 print(user_details)
+                print("returning True")
+                return True
             else:
                 return False
+                print("Returning False")
                 print("Login Failed")
 
     def close_database(self):
@@ -67,4 +72,3 @@ class LibraryTable(object):
     def create_table(self):
         with self.db_connect:
             self.c.execute(sql_const.INIT_LIBRARY_TABLE)
-
