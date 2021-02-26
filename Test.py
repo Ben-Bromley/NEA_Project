@@ -1,7 +1,7 @@
-import Database_Manager
+import databaseManager
 
 # Initialise UserTable object
-test = Database_Manager.UserTable()
+test = databaseManager.UserTable()
 
 
 # authorises user and returns username
@@ -38,16 +38,16 @@ welcome_option = input("- ")
 # Returning input
 print(f'You chose: {welcome_option}')
 
-if welcome_option == 'A':
+if welcome_option == '1':
     # Gets username from user
     # authorises user
     user = auth_user()
     print("Access Granted, Welcome", user)
 
-elif welcome_option == 'B':
+elif welcome_option == '2':
     print("Please log in first:")
     auth_user()
 
-elif welcome_option == 'C':
+elif welcome_option == '3':
     print("Welcome to registration")
     create_user()
