@@ -24,6 +24,8 @@ def auth(username, password):
     # returns true if login is correct
     return auth_user_object.get_user((normUsername), (normPassword))
 
+# TODO: MOVE TO LOGINPAGE CLASS AS A FUNCTION
+
 
 def auth_to_open(username, password):
     auth_boolean = auth(username, password)
@@ -103,6 +105,10 @@ class LoginPage:
 
 def open_library():
     main_library = Tk()
+    # TODO: LoginPage should access this
+    #  this should have a method to create and destroy tables
+    # --------------------
+    # TODO: needs methods to deal with items
     library_form_object = PersonalLibrary(main_library)
     main_library.mainloop()
 
