@@ -58,9 +58,8 @@ class UserTable(object):
                 print("returning True")
                 return True
             else:
+                print("Returning False, Login Failed")
                 return False
-                print("Returning False")
-                print("Login Failed")
 
     def close_database(self):
         # closes database connection
@@ -76,3 +75,7 @@ class LibraryTable(object):
     def create_table(self):
         with self.db_connect:
             self.c.execute(sql_const.INIT_LIBRARY_TABLE)
+
+    def close_database(self):
+        # closes database connection
+        self.db_connect.close()
