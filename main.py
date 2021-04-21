@@ -41,16 +41,32 @@ def auth_to_open(username, password):
 
 
 # TODO: make create user form
-# def open_create_user():
+class CreateUserPage:
+
+    # creates the basic tkinter form
+    def __init__(self, CreateUserPage):
+        self.CreateUserPage = CreateUserPage
+        self.CreateUserPage.title("Create Account")
+        self.master.geometry('275x400')  # width then height
+        self.master.resizable(0, 0)  # cannot resize form
+        self.master['bg'] = 'light grey'
 
 # TODO: open delete user form
-# def open_delete_user():
+# should require authentication
+class CreateUserPage:
+
+    # creates the basic tkinter form
+    def __init__(self, DeleteUserPage):
+        self.CreateUserPage = DeleteUserPage
+        self.CreateUserPage.title("Delete Account")
+        self.master.geometry('275x400')  # width then height
+        self.master.resizable(0, 0)  # cannot resize form
+        self.master['bg'] = 'light grey'
 
 
 # Login page
-
 class LoginPage:
-
+    #  sets up basic form properties
     def __init__(self, master):
         self.master = master
         self.master.title("Welcome")  # names the form
@@ -128,4 +144,4 @@ login_page_object = LoginPage(root)  # instantiates the LoginPage
 root.mainloop()  # keeps form running
 #
 print("running random code")
-# then open pdf
+
