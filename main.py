@@ -6,10 +6,17 @@ from tkinter.ttk import *
 
 import databaseManager
 
+# global constants to be implemented when instantiating classes and mainlooping forms
+login = Tk()
+library = Tk()
+# not in use yet
+# create = Tk()
+# delete = Tk()
+
 
 # authorises user
 # this is called to authorise a user before opening
-#  and to authorise a user before deleting their account
+# and to authorise a user before deleting their account
 def auth(username, password):
     """
     :param username:∏
@@ -17,12 +24,12 @@ def auth(username, password):
     :return: boolean
     """
     # Converts tkinter variables into python variables
-    normUsername = username.get()
-    normPassword = password.get()
+    norm_username = username.get()
+    norm_password = password.get()
     # instantiates class
-    auth_user_object = databaseManager.UserTable()
+    user_auth_db = databaseManager.UserTable()
     # returns true if login is correct
-    return auth_user_object.get_user((normUsername), (normPassword))
+    return user_auth_db.get_user(norm_username, norm_password)
 
 # TODO: MOVE TO LOGINPAGE CLASS AS A FUNCTION
 
@@ -44,24 +51,25 @@ def auth_to_open(username, password):
 class CreateUserPage:
 
     # creates the basic tkinter form
-    def __init__(self, CreateUserPage):
-        self.CreateUserPage = CreateUserPage
-        self.CreateUserPage.title("Create Account")
-        self.master.geometry('275x400')  # width then height
-        self.master.resizable(0, 0)  # cannot resize form
-        self.master['bg'] = 'light grey'
+    def __init__(self, create_master):
+        self.create_master = create_master
+        self.create_master.title("Create Account")
+        self.create_master.geometry('275x400')  # width then height
+        self.create_master.resizable(0, 0)  # cannot resize form
+        self.create_master['bg'] = 'light grey'
+
 
 # TODO: open delete user form
 # should require authentication
-class CreateUserPage:
+class DeleteUserPage:
 
     # creates the basic tkinter form
-    def __init__(self, DeleteUserPage):
-        self.CreateUserPage = DeleteUserPage
-        self.CreateUserPage.title("Delete Account")
-        self.master.geometry('275x400')  # width then height
-        self.master.resizable(0, 0)  # cannot resize form
-        self.master['bg'] = 'light grey'
+    def __init__(self, delete_master):
+        self.delete_master = delete_master
+        self.delete_master.title("Delete Account")
+        self.delete_master.geometry('275x400')  # width then height
+        self.delete_master.resizable(0, 0)  # cannot resize form
+        self.delete_master['bg'] = 'light grey'
 
 
 # Login page
@@ -69,10 +77,9 @@ class LoginPage:
     #  sets up basic form properties
     def __init__(self, master):
         self.master = master
-        self.master.title("Welcome")  # names the form
+        master.title("Welcome")  # names the form
         self.master.geometry('275x400')  # width then height
         self.master.resizable(0, 0)  # cannot resize form
-        self.master['bg'] = 'light grey'
         # intro label
         self.Top_Lbl = Label(self.master, text="Sign in") \
             .grid(column=0, row=2, padx=(0, 0), pady=(15, 10))
@@ -120,28 +127,40 @@ class LoginPage:
 
 
 def open_library():
-    main_library = Tk()
-    # TODO: LoginPage should access this
-    #  this should have a method to create and destroy tables
-    # --------------------
-    # TODO: needs methods to deal with items
-    library_form_object = PersonalLibrary(main_library)
-    main_library.mainloop()
+    library_form_object = PersonalLibrary(library)
+    library.mainloop()
 
 
 class PersonalLibrary:
 
-    def __init__(self, main_library):
-        self.main_library = main_library
-        self.main_library.title("My Library")  # names the form
-        self.main_library.geometry('600x360')  # width then height
-        self.main_library.resizable(0, 0)  # cannot resize form
+    def __init__(self, library_master):
+        self.library_master = library_master
+        self.library_master.title("My Library")  # names the form
+        self.library_master.geometry('600x360')  # width then height
+        self.library_master.resizable(0, 0)  # cannot resize form
+
+        # region adds main buttons
+        self.ImportButton = Button(self.library_master, text="Import File",
+                                            command=lambda: self.import_file()).pack()
+        self.ExportButton = Button(self.library_master, text="Export File",
+                                   command=lambda: self.export_file()).pack()
+        # endregion
+
+    def import_file(self):
+        # how do I import files?
+        return
+
+    def export_file(self):
+        # how do I export files?
+        return
+
+    # TODO: needs methods to deal with items
 
 
 # used to open the login page
-root = Tk()  # runs form
-login_page_object = LoginPage(root)  # instantiates the LoginPage
-root.mainloop()  # keeps form running
-#
-print("running random code")
+login_page_object = LoginPage(login)  # instantiates the LoginPage
+login.mainloop()  # keeps form running
+
+# output after program closes
+print("program finished")
 
