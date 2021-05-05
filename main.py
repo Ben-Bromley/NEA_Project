@@ -58,6 +58,37 @@ class CreateUserPage:
         self.create_master.resizable(0, 0)  # cannot resize form
         self.create_master['bg'] = 'light grey'
 
+        # region username and password labels
+        self.User_Lbl = Label(self.master, text="New Username:", anchor='w')\
+            .grid(sticky='w', column=0, row=3, padx=(20, 0), pady=(10, 0))
+        self.Pass_lbl = Label(self.master, text="New Password:", anchor='w')\
+            .grid(sticky='w', column=0, row=5, padx=(20, 0), pady=(10, 0))
+        # endregion
+
+        # region Username var assignment & entry box
+        self.Username = StringVar()
+        self.User_Ent = Entry(self.master, width=25, textvariable=self.Username)\
+            .grid(column=0, row=4, padx=(20, 0))
+        # endregion
+
+        # region Password var assignment & entry box
+        self.Password = StringVar()
+        self.Pass_Ent = Entry(self.master, width=25, textvariable=self.Password)\
+            .grid(column=0, row=6, padx=(20, 0))
+        # endregion
+
+        # region button & commands
+        # 
+        self.LoginButton = Button(self.master, text="Create Account",
+                                  command=lambda: [createAccount(self.Username, self.Password)])\
+            .grid(column=0, row=7, pady=(10, 5))
+        # endregion
+
+    def createAccount(self, Username, Password):
+      new_username = Username.get()
+      new_password = Password.get()
+      databaseManager.create_user(new_username, new_password)
+
 
 # TODO: open delete user form
 # should require authentication
