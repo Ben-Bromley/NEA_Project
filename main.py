@@ -17,6 +17,8 @@ login = Tk()
 # authorises user
 # this is called to authorise a user before opening
 # and to authorise a user before deleting their account
+
+
 def auth(username, password):
     """
     :param username:∏
@@ -277,11 +279,17 @@ class PersonalLibrary:
         home_folder = 'user-files/'
         shutil.copy(file_to_import, home_folder)
         print("File imported successfully")
-        return 
+        return
 
     def export_file(self):
-        # how do I export files?
+        # opens dialog box for user to select file
+        file_to_export = filedialog.askopenfilename()
+        print(f"user selected {file_to_export}")
+        dst = "C://Users/Public/Documents/"
+        shutil.copy(file_to_export, dst)
+        print("File imported successfully")
         return
+
     def delete_file(self):
         file = filedialog.askopenfilename()
         # If the file exists, delete it
@@ -291,8 +299,6 @@ class PersonalLibrary:
             print(f'Error: {file} not a valid filename')
         return
 
-    # TODO: needs methods to deal with items
-
 
 # used to open the login page
 login_page_object = LoginPage(login)  # instantiates the LoginPage
@@ -300,10 +306,3 @@ login_page_object.open()  # keeps form running
 
 # output after program closes
 print("program finished")
-
-
-# class SheetMusicManager(tkinter.Tk):
-
-#   def __init__(self, *args, **kwargs):
-
-#     tkinter.Tk.__init__(self, *args, **kwargs)
