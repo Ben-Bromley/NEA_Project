@@ -12,7 +12,7 @@ GET_USER_ID = """SELECT USERID FROM users
                 WHERE USERNAME = ? AND PASSWORD = ?"""
 
 # Delete user from table
-DELETE_USER = """DELETE USERNAME, PASSWORD FROM Users
+DELETE_USER = """DELETE FROM Users
                 WHERE USERNAME = ? AND PASSWORD = ?"""
 
 # Add user to table
@@ -41,5 +41,3 @@ DELETE_USER_LIBRARY = """"""
 
 
 # All MUSIC TABLE SQL
-
-
