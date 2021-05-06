@@ -1,17 +1,18 @@
 # Ben Bromley NEA project - 2020/21 - Wigston College
 
+# for general tkinter
 from tkinter import *
 from tkinter import Tk, messagebox
 from tkinter.ttk import *
-
+# for file management
+import os
+from tkinter import filedialog
+import shutil
+# for database access
 import databaseManager
 
-# global constants to be implemented when instantiating classes and mainlooping forms
+# creates Tk as an instance of a tkinter form
 login = Tk()
-# not in use yet
-# create = Tk()
-# delete = Tk()
-
 
 # authorises user
 # this is called to authorise a user before opening
@@ -30,8 +31,6 @@ def auth(username, password):
     # returns true if login is correct
     return user_auth_db.get_user(norm_username, norm_password)
 
-# TODO: MOVE TO LOGINPAGE CLASS AS A FUNCTION
-
 
 def auth_to_open(username, password):
     auth_boolean = auth(username, password)
@@ -39,26 +38,49 @@ def auth_to_open(username, password):
     if auth_boolean:
         print("Auth returned True")
         login_page_object.close()
-        library_form_object = init_library()
-        library_form_object.open
+        open_library()
     else:
         # TODO: finish warning box work
-        messagebox.showwarning("Username and/or password incorrect."
-                               "\nPlease Try Again")
+        messagebox.showwarning("Username and/or password incorrect.")
+
+# region init and open library
+
+
+def open_library():
+    library_form_object = init_library()
+    library_form_object.open
+
 
 def init_library():
-  library = Tk()
-  return PersonalLibrary(library)
+    library = Tk()
+    return PersonalLibrary(library)
+# endregion
+# region init and open create form
+
 
 def open_create_form():
-  create_form = init_create_form()
-  create_form.open
+    create_form = init_create_form()
+    create_form.open
+
 
 def init_create_form():
-  create = Tk()
-  return CreateUserPage(create)
+    create = Tk()
+    return CreateUserPage(create)
+# endregion
+# region init and open delete form
 
-# TODO: make create user form
+
+def open_delete_form():
+    delete_form = init_delete_form()
+    delete_form.open
+
+
+def init_delete_form():
+    delete = Tk()
+    return DeleteUserPage(delete)
+# endregion
+
+
 class CreateUserPage:
 
     # creates the basic tkinter form
@@ -97,32 +119,74 @@ class CreateUserPage:
         # endregion
 
     def createAccount(self, Username, Password):
-
-      new_username = Username.get()
-      new_password = Password.get()
-      databaseManager.create_user(new_username, new_password)
+        new_username = Username.get()
+        new_password = Password.get()
+        databaseManager.userTable.create_user(new_username, new_password)
 
     def open(self):
-      self.create_master.mainloop()
+        self.create_master.mainloop()
 
     def close(self):
-      self.create_master.destroy()
+        self.create_master.destroy()
 
 
-# TODO: open delete user form
-# should require authentication
 class DeleteUserPage:
 
     # creates the basic tkinter form
-    def __init__(self, delete_master):
-        self.delete_master = delete_master
-        self.delete_master.title("Delete Account")
-        self.delete_master.geometry('275x400')  # width then height
-        self.delete_master.resizable(0, 0)  # cannot resize form
-        self.delete_master['bg'] = 'light grey'
- 
+    def __init__(self, master):
+        self.master = master
+        self.master.title("Delete Account")
+        self.master.geometry('275x400')  # width then height
+        self.master.resizable(0, 0)  # cannot resize form
+
+        # intro label
+        self.Top_Lbl = Label(self.master, text="Confirm details to delete account:") \
+            .grid(column=0, row=2, padx=(0, 0), pady=(15, 10))
+
+        # region Login Labels
+        # Label is below the top label, and above the appropriate entry box
+        self.User_Lbl = Label(self.master, text="Username:", anchor='w')\
+            .grid(sticky='w', column=0, row=3, padx=(20, 0), pady=(10, 0))
+        self.Pass_lbl = Label(self.master, text="Password:", anchor='w')\
+            .grid(sticky='w', column=0, row=5, padx=(20, 0), pady=(10, 0))
+        # endregion
+
+        # region Username var assignment & entry box
+        self.Username = StringVar()
+        self.User_Ent = Entry(self.master, width=25, textvariable=self.Username)\
+            .grid(column=0, row=4, padx=(20, 0))
+        # endregion
+
+        # region Password var assignment & entry box
+        self.Password = StringVar()
+        self.Pass_Ent = Entry(self.master, width=25, textvariable=self.Password)\
+            .grid(column=0, row=6, padx=(20, 0))
+        # endregion
+
+        # region button & commands
+        self.LoginButton = Button(self.master, text="Delete",
+                                  command=lambda: self.deleteAccount(self.Username, self.Password))\
+            .grid(column=0, row=7, pady=(10, 5))
+
+    def deleteAccount(self, Username, Password):
+        if auth(Username, Password):
+            pythonUsername = Username.get()
+            pythonPassword = Password.get()
+            databaseManager.userTable.delete_user(
+                pythonUsername, pythonPassword)
+            self.close()
+        else:
+            messagebox.showwarning("Invalid account details")
+
+    def open(self):
+        self.master.mainloop()
+
+    def close(self):
+        self.master.destroy()
 
 # Login page
+
+
 class LoginPage:
     #  sets up basic form properties
     def __init__(self, master):
@@ -166,18 +230,15 @@ class LoginPage:
                                    command=lambda: [LoginPage(master).close(), open_create_form()]) \
             .grid(column=0, row=9, pady=(5, 5))
         self.DeleteButton = Button(self.master, text="Delete your account",
-                                   command=lambda: [LoginPage(master).close(),
-                                                    """should open delete user form"""])\
+                                   command=lambda: [LoginPage(master).close(), open_delete_form()])\
             .grid(column=0, row=10, pady=(5, 5))
         # endregion
 
     def open(self):
-      self.master.mainloop()
+        self.master.mainloop()
 
     def close(self):
         self.master.destroy()
-
-
 
 
 class PersonalLibrary:
@@ -190,24 +251,44 @@ class PersonalLibrary:
 
         # region adds main buttons
         self.ImportButton = Button(self.library_master, text="Import File",
-                                            command=lambda: self.import_file()).pack()
+                                   command=lambda: self.import_file()).pack()
         self.ExportButton = Button(self.library_master, text="Export File",
                                    command=lambda: self.export_file()).pack()
+        self.DeleteButton = Button(self.library_master, text="Delete File",
+                                   command=lambda: self.delete_file()).pack()
         # endregion
 
     def open():
-      self.master.mainloop()
-
+        self.master.mainloop()
 
     def close():
-      self.master.destroy()
+        self.master.destroy()
 
     def import_file(self):
-        # how do I import files?
-        return
+        # create directory
+        try:
+            os.mkdir('user-files/')
+        # catches error if folder already exists
+        except FileExistsError as exc:
+            print(exc)
+        # opens dialog box for user to select file
+        file_to_import = filedialog.askopenfilename()
+        print(f"user selected {file_to_import}")
+        home_folder = 'user-files/'
+        shutil.copy(file_to_import, home_folder)
+        print("File imported successfully")
+        return 
 
     def export_file(self):
         # how do I export files?
+        return
+    def delete_file(self):
+        file = filedialog.askopenfilename()
+        # If the file exists, delete it
+        if os.path.isfile(file):
+            os.remove(file)
+        else:
+            print(f'Error: {file} not a valid filename')
         return
 
     # TODO: needs methods to deal with items
@@ -226,4 +307,3 @@ print("program finished")
 #   def __init__(self, *args, **kwargs):
 
 #     tkinter.Tk.__init__(self, *args, **kwargs)
-    
