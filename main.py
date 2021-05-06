@@ -8,7 +8,6 @@ import databaseManager
 
 # global constants to be implemented when instantiating classes and mainlooping forms
 login = Tk()
-library = Tk()
 # not in use yet
 # create = Tk()
 # delete = Tk()
@@ -40,23 +39,35 @@ def auth_to_open(username, password):
     if auth_boolean:
         print("Auth returned True")
         login_page_object.close()
-        open_library()
+        library_form_object = init_library()
+        library_form_object.open
     else:
         # TODO: finish warning box work
         messagebox.showwarning("Username and/or password incorrect."
                                "\nPlease Try Again")
 
+def init_library():
+  library = Tk()
+  return PersonalLibrary(library)
+
+def open_create_form():
+  create_form = init_create_form()
+  create_form.open
+
+def init_create_form():
+  create = Tk()
+  return CreateUserPage(create)
 
 # TODO: make create user form
 class CreateUserPage:
 
     # creates the basic tkinter form
-    def __init__(self, create_master):
-        self.create_master = create_master
-        self.create_master.title("Create Account")
-        self.create_master.geometry('275x400')  # width then height
-        self.create_master.resizable(0, 0)  # cannot resize form
-        self.create_master['bg'] = 'light grey'
+    def __init__(self, master):
+        self.master = master
+        self.master.title("Create Account")
+        self.master.geometry('275x200')  # width then height
+        self.master.resizable(0, 0)  # cannot resize form
+        self.master['bg'] = 'light grey'
 
         # region username and password labels
         self.User_Lbl = Label(self.master, text="New Username:", anchor='w')\
@@ -77,17 +88,25 @@ class CreateUserPage:
             .grid(column=0, row=6, padx=(20, 0))
         # endregion
 
+        # TODO: add another entry box for confirmation
+
         # region button & commands
-        # 
         self.LoginButton = Button(self.master, text="Create Account",
-                                  command=lambda: [createAccount(self.Username, self.Password)])\
+                                  command=lambda: [self.createAccount(self.Username, self.Password)])\
             .grid(column=0, row=7, pady=(10, 5))
         # endregion
 
     def createAccount(self, Username, Password):
+
       new_username = Username.get()
       new_password = Password.get()
       databaseManager.create_user(new_username, new_password)
+
+    def open(self):
+      self.create_master.mainloop()
+
+    def close(self):
+      self.create_master.destroy()
 
 
 # TODO: open delete user form
@@ -101,14 +120,14 @@ class DeleteUserPage:
         self.delete_master.geometry('275x400')  # width then height
         self.delete_master.resizable(0, 0)  # cannot resize form
         self.delete_master['bg'] = 'light grey'
-
+ 
 
 # Login page
 class LoginPage:
     #  sets up basic form properties
     def __init__(self, master):
         self.master = master
-        master.title("Welcome")  # names the form
+        self.master.title("Welcome")  # names the form
         self.master.geometry('275x400')  # width then height
         self.master.resizable(0, 0)  # cannot resize form
         # intro label
@@ -144,8 +163,7 @@ class LoginPage:
             column=0, row=8, padx=10, pady=20)
 
         self.CreateButton = Button(self.master, text="Create a new account",
-                                   command=lambda: [LoginPage(master).close(),
-                                                    """should open create user form"""]) \
+                                   command=lambda: [LoginPage(master).close(), open_create_form()]) \
             .grid(column=0, row=9, pady=(5, 5))
         self.DeleteButton = Button(self.master, text="Delete your account",
                                    command=lambda: [LoginPage(master).close(),
@@ -153,13 +171,13 @@ class LoginPage:
             .grid(column=0, row=10, pady=(5, 5))
         # endregion
 
+    def open(self):
+      self.master.mainloop()
+
     def close(self):
         self.master.destroy()
 
 
-def open_library():
-    library_form_object = PersonalLibrary(library)
-    library.mainloop()
 
 
 class PersonalLibrary:
@@ -177,6 +195,13 @@ class PersonalLibrary:
                                    command=lambda: self.export_file()).pack()
         # endregion
 
+    def open():
+      self.master.mainloop()
+
+
+    def close():
+      self.master.destroy()
+
     def import_file(self):
         # how do I import files?
         return
@@ -190,8 +215,15 @@ class PersonalLibrary:
 
 # used to open the login page
 login_page_object = LoginPage(login)  # instantiates the LoginPage
-login.mainloop()  # keeps form running
+login_page_object.open()  # keeps form running
 
 # output after program closes
 print("program finished")
 
+
+# class SheetMusicManager(tkinter.Tk):
+
+#   def __init__(self, *args, **kwargs):
+
+#     tkinter.Tk.__init__(self, *args, **kwargs)
+    

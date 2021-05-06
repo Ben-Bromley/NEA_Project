@@ -35,8 +35,7 @@ class UserTable(object):
             # Step 1: Get user ID (in order to delete user table)
             self.c.execute(sql_const.GET_USER_ID, (username, password))
             # test code to collect user id:
-            # user_id = self.c.fetchall()
-
+            user_id = self.c.fetchall()
             # Step 2: Deleting user
             self.c.execute(sql_const.DELETE_USER, (username, password))
 
