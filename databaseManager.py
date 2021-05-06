@@ -1,9 +1,7 @@
 import sqlite3
 import sql_const
 
-# Class for managing the UserTab;e in the database
-
-
+# Class for managing the UserTable in the database
 class UserTable(object):
     def __init__(self):
         # Connects to the database file
@@ -38,10 +36,8 @@ class UserTable(object):
             user_id = self.c.fetchall()
             # Step 2: Deleting user
             self.c.execute(sql_const.DELETE_USER, (username, password))
-
-            # TODO: Step 3: Remove Users Files
-            # TODO: Step 4: Remove Library For User (delete where userid = ?)
-            # self.c.execute(sql_const.DELETE_USER) - USER TABLE
+            # Step 3: Remove Users Files
+            # Step 4: Remove record in Library table For User (delete where userid = ?)
 
     def get_user(self, username, password):
         # gets user details from database
@@ -78,3 +74,5 @@ class LibraryTable(object):
     def close_database(self):
         # closes database connection
         self.db_connect.close()
+
+userTable = UserTable()
