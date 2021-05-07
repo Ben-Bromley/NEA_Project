@@ -120,10 +120,13 @@ class CreateUserPage:
             .grid(column=0, row=7, pady=(10, 5))
         # endregion
 
+    # creates a new user account
     def createAccount(self, Username, Password):
-        new_username = Username.get()
-        new_password = Password.get()
-        databaseManager.userTable.create_user(new_username, new_password)
+      # gets values from tkinter variables 
+      new_username = Username.get()
+      new_password = Password.get()
+      # passes values to db module to enter in database
+      databaseManager.userTable.create_user(new_username, new_password)
 
     def open(self):
         self.create_master.mainloop()
@@ -166,17 +169,22 @@ class DeleteUserPage:
         # endregion
 
         # region button & commands
-        self.LoginButton = Button(self.master, text="Delete",
+        self.DeleteButton = Button(self.master, text="Delete",
                                   command=lambda: self.deleteAccount(self.Username, self.Password))\
             .grid(column=0, row=7, pady=(10, 5))
 
+    # deletes a user account
     def deleteAccount(self, Username, Password):
+        # checks account exists before deleting it
         if auth(Username, Password):
-            pythonUsername = Username.get()
-            pythonPassword = Password.get()
-            databaseManager.userTable.delete_user(
-                pythonUsername, pythonPassword)
-            self.close()
+          # gets values from tkinter variables
+          pythonUsername = Username.get()
+          pythonPassword = Password.get()
+          # passes details to db module to remove corresponding record
+          databaseManager.userTable.delete_user(pythonUsername, pythonPassword)
+          # closes the application after item deleted
+          self.close()
+        # alerts user and doesn't delete non-existent account
         else:
             messagebox.showwarning("Invalid account details")
 
@@ -185,8 +193,6 @@ class DeleteUserPage:
 
     def close(self):
         self.master.destroy()
-
-# Login page
 
 
 class LoginPage:
